@@ -1,0 +1,557 @@
+snippet snippets "outputs all snippets for this language" b
+alertpopup
+atag
+binarySearch
+click
+change
+comment
+comparedatetime
+fetch
+ifor
+inner
+.for
+log
+.map
+mithrilapp
+newapi
+newapiview
+newdatatable
+newform
+newtype
+newview
+optionalcomponent
+pagelink
+percentage
+round
+RAM
+switch
+.then
+timeout
+vcomment
+videopopup
+view
+addcolumn
+foreign
+newtable
+endsnippet
+
+snippet alertpopup "creates an alert popup" b
+NAME ? null : m('div', {style: 'margin-top: 20px; margin-bottom: 20px;'}, [
+	m(Alert, {type: 'info'}, [
+		m('h3', TITLE),
+		m('div', {style: 'margin-bottom: 6px; margin-left: 10px;'}, DESCRIPTION, m('i.material-icons', {style: 'bottom: 5px; top: 5px; left: 5px; position: relative;'}, 'ICON')),
+		m(Button, {
+			variant: 'flat',
+			onclick: async () => {await ac['/api/introInfoDismiss'].post({name: 'NAME'})}
+		}, lang.dontShow)
+	])
+])
+endsnippet
+
+snippet atag "creates an anchor tag to another page in mithril" b
+m(m.route.Link, {href: '$1', class: '$2'})
+endsnippet
+
+snippet binarySearch "creates a binary search function" b
+function binarySearch(nums: number[], target: number): number {
+  let left: number = 0
+  let right: number = nums.length - 1
+  while (left <= right) {
+    const mid: number = Math.floor((left + right) / 2)
+    if (nums[mid] === target) return mid
+    if (target < nums[mid]) right = mid - 1
+    else left = mid + 1
+  }
+  return -1
+}
+endsnippet
+
+snippet percentage "creates a function that allows you to calculate the percentage of something" b
+/**
+* Calculates the percentage of a partial value in reference to a total value.
+* @param {number} partialValue The partial value to calculate the percentage of.
+* @param {number} totalValue The total value in reference to the partial value.
+* @returns {number} The percentage of the partial value in reference to the total value.
+*/
+function calculatePercentage(partialValue: number, totalValue: number): number {
+	const percentage = (partialValue/totalValue) * 100
+	return percentage
+}
+endsnippet
+
+snippet round "makes a round function" b
+/** Round number to nearest increment.
+ *
+ * @param num The number to round.
+ * @param increment The nearest increment to round to. Default 5.
+ *
+ * @example
+ * roundToNearest(22, 5) // 20
+ * roundToNearest(24, 5) // 25
+ * roundToNearest(1.15, 0.5) // 1
+ * roundToNearest(1.35, 0.5) // 1.5
+ */
+export function roundToNearest(num: number, increment = 5): number {
+  if (!num) return 0
+  const remainder = num % increment
+  if (remainder >= (increment / 2)) return num + (increment - remainder)
+  return num - remainder
+}
+endsnippet
+
+snippet click "creates an onclick function" b
+onclick: () => {
+	$1
+}
+endsnippet
+
+snippet change  "creates an onchange event" b
+onchange: (event: any) => {
+	$1
+}
+endsnippet
+
+snippet comment "creates a section comment" b
+/* ==========================================================================
+$1
+============================================================================= */
+endsnippet
+
+snippet comparedatetime "creates a function that checks if the passed date is within the last x number of (years, months, days, hours, minutes or seconds)."
+/**
+ * Compares the given date to a generated date
+ * @param {Date} date The given date to compare
+ * @param {string} unit The unit to compare the date with (e.g. years, months, days, hours, minutes, seconds)
+ * @param {number} num The number of units to subtract from the generated date
+ * @returns {boolean} Whether or not the given date is greater than or equal to the generated date
+ */
+function compareDateTime(date: Date, unit: string, num: number): boolean {
+  const compareDate = new Date()
+  switch (unit) {
+    case 'years': {compareDate.setFullYear(compareDate.getFullYear() - num); break}
+    case 'months': {compareDate.setMonth(compareDate.getMonth() - num); break}
+    case 'days': {compareDate.setDate(compareDate.getDate() - num); break}
+    case 'hours': {compareDate.setHours(compareDate.getHours() - num); break}
+    case 'minutes': {compareDate.setMinutes(compareDate.getMinutes() - num); break}
+    case 'seconds': {compareDate.setSeconds(compareDate.getSeconds() - num); break}
+    default: {return false}
+  }
+  return date >= compareDate
+}
+endsnippet
+
+snippet fetch "creates a typical fetch statement" b
+await fetch('$1', {
+	method: 'GET',
+	headers: {'Content-Type': 'application/json'},
+	// body: JSON.stringify(data), // Use for POST/PUT requests
+}).then(response => {
+	if (!response.ok) {
+		throw new Error('Network response was not ok');
+	}
+	return response.json();
+}).then(data => {
+	console.log('Success:', data);
+}).catch(error => {
+	console.error('There was a problem with the fetch operation:', error);
+});
+endsnippet
+
+snippet RAM "creates a parent with a square grid layout that automatically will be mobile friendly" b
+m('div', {style: 'display: grid; grid-gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));'}, [
+  $1
+])
+endsnippet
+
+snippet ifor "creates a for loop" b
+for (const x of $1) {
+    $2
+}
+endsnippet
+
+snippet inner "creates an innerHTML attribute" b
+{innerHTML: $1}
+endsnippet
+
+snippet .for "creates a foreach loop" b
+.forEach(el => {
+})
+endsnippet
+
+snippet log "performs a console.log() function" b
+console.log($1)
+endsnippet
+
+snippet .map "creates a map over the elements in an array" b
+.map(el => {$1})
+endsnippet
+
+snippet mithrilapp "creates a new mithril application" b
+var root = document.body
+var App = {
+	view: () => {
+		return $1
+	}
+}
+
+m.mount(root, App)
+endsnippet
+
+snippet newapi "creates a new api page" b
+import {p} from 'b/main'
+import {ControllerRes} from 'b/routes'
+import {Request, Response} from 'express'
+import {GetReqNAME, PostReqNAME, PutReqNAME, DeleteReqNAME} from 's/types'
+
+export type GetRes$1  = ControllerRes<typeof NAMEController, 'get'>
+
+export const NAMEController = (req: Request, res: Response) => {
+  return {
+    /* ==========================================================================
+    GET REQUEST SECTION
+    ============================================================================= */
+    get: async (req: Request, res: Response) => {
+			const body: GetReqNAME = req.body
+
+			return await p.NAME.findMany({where: {id: body.id}})
+    },
+
+    /* ==========================================================================
+    POST REQUEST SECTION
+    ============================================================================= */
+    post: async (req: Request, res: Response) => {
+			const body: PostReqNAME = req.body
+
+			return await p.NAME.create({
+			  data: {
+				}
+			})
+    },
+
+    /* ==========================================================================
+    PUT REQUEST SECTION
+    ============================================================================= */
+    put: async (req: Request, res: Response) => {
+			const body: PutReqNAME = req.body
+
+			return await p.NAME.update({
+			  where: {id: body.id},
+				data: {
+				}
+			})
+    },
+
+    /* ==========================================================================
+    DELETE REQUEST SECTION
+    ============================================================================= */
+    delete: async (req: Request, res: Response) => {
+			const body: DeleteReqNAME = req.body
+
+			return await p.NAME.delete({where: {id: body.id}})
+    }
+  }
+}
+endsnippet
+
+snippet newapiview "creates a new api view template for backend" b
+import {Request, Response, NextFunction} from 'express'
+import {evaluatePermission} from 'b/core'
+import {p, Prisma} from 'b/main'
+
+export type Req = {}
+export type Res = ReturnType<typeof e.controller>
+
+const e = {
+  middleware(req: Request, res: Response, next: NextFunction) {
+    const body: Req = req.body
+    const e = evaluatePermission(req, res, next)
+    e.add()
+    e.evaluate()
+  },
+
+  async controller(req: Request, res: Response) {
+    const body: Req = req.body
+    return {
+    }
+  }
+}
+
+export default e
+endsnippet
+
+snippet newdatatable "creates a database data table view" b
+import m from 'mithril'
+import {AppBar, Button, ContextMenu} from '~/components'
+import {AskConfirm, DataTable, Dialog, Filter} from '~/components2'
+import {app, ac, lang} from '~/main'
+import {ArrayElement, GetResNAME, PutReqProductNAME, PostReqProductNAME, DeleteReqProductNAME} from 's/types'
+import {NAMEForm} from '~/forms'
+
+export async function list() {
+  const vi = {
+    filter: Filter<ArrayElement<GetResNAME>>({
+      namespace: 'list',
+      searchProp: '',
+      onFilter: () => {vi.dataTable.data = vi.filter.filteredData}
+    }),
+    dataTable: DataTable<GetResNAME>({
+      columns: ['', ''],
+      render: el => {
+        return {
+          content: [el, el],
+          after: [
+            m(ContextMenu, {
+              data: [
+                {
+                  text: lang.edit,
+                  icon: 'edit',
+                  onclick: () => {
+                    const body: PutReqNAME = {id: el.id}
+                    const form = NAMEForm(body)
+                    Dialog({
+                      title: 'Edit NAME',
+                      confirmText: lang.edit,
+                      onConfirm: async () => {
+                        m.request({
+                          method: 'PUT',
+                          url: '/api/NAME',
+                          body: body
+                        }).then(async res => {
+                          app.message('NAME has been edited')
+                          await ac.$clear('NAME')
+                        }).catch(e => console.error(e))
+                      },
+                      body: form
+                    })
+                  }
+                },
+                {divider: true},
+                {
+                  text: lang.delete,
+                  icon: 'delete',
+                  onclick: async () => {
+                    if (await AskConfirm({view: () => [m('div', 'Are you sure you want to delete this NAME?'), m('div', lang.cannotUndo)]})) {
+                      const body: DeleteReqNAME = {id: el.id}
+                      m.request({
+                        method: 'DELETE',
+                        url: '/api/NAME',
+                        body: body
+                      }).then(async res => {
+                        app.message('NAME has been deleted')
+                        await ac.$clear('NAME')
+                      }).catch(e => console.error(e))
+                    }
+                  }
+                }
+              ]
+            }, m(Button, {icon: 'more_vert', onclick: (event: Event) => event.preventDefault()}))
+          ]
+        }
+      }
+    })
+  }
+
+  const u = ac.$m(async () => {
+    vi.filter.setData(await ac.NAME())
+  })
+  await u.func()
+
+  return {
+    view: () => {
+      u()
+      return [
+        m(AppBar, [
+          m(Button, {
+            onclick: () => {
+              const body: PostReqNAME = {}
+              const form = NAMEForm(body)
+              Dialog({
+                title: 'Add NAME',
+                confirmText: lang.add,
+                onConfirm: async () => {
+                  m.request({
+                    method: 'POST',
+                    url: '/api/NAME',
+                    body: body
+                  }).then(async res => {
+                    app.message('NAME has been created')
+                    await ac.$clear('NAME')
+                  }).catch(e => console.error(e))
+                },
+                body: form
+              })
+            }
+          }, 'Add NAME')
+        ]),
+        m('div.space', [
+          m(vi.filter.component),
+          m(vi.dataTable.component)
+        ])
+      ]
+    }
+  }
+}
+endsnippet
+
+snippet newform "creates a new form view" b
+import m from 'mithril'
+import {PostReqNAME, PutReqNAME} from 's/types'
+import {Field as Field2} from '~/components2'
+
+export function NAMEForm(form?: PostReqNAME | PutReqNAME) {
+  const f = {
+    message: Field2({
+      type: 'textarea',
+      label: 'Message',
+      required: true,
+      value: form.message,
+      onValue: val => form.message = val
+    })
+  }
+  return {view: () => [m(f.message.component)]}
+}
+endsnippet
+
+snippet newtype "creates type template for api types" b
+export {GetRes$1NAME} from 'b/api'
+
+export type GetReqNAME = {
+}
+
+export type PostReqNAME = {
+}
+
+export type PutReqNAME = {
+}
+
+export type DeleteReqNAME = {
+}
+endsnippet
+
+
+snippet newview "creates a new mithril view" b
+import m from 'mithril'
+import {ac, lang} from '~/main'
+import {AppBar} from '~/components'
+
+export async function goals() {
+  /* ==========================================================================
+  DATABASE APIS
+  ============================================================================= */
+  const u = ac.$m(async () => {
+  })
+  await u.func()
+  /* ==========================================================================
+  ATTRIBUTES START
+  ============================================================================= */
+  /* ==========================================================================
+  FUNCTIONS START
+  ============================================================================= */
+  /* ==========================================================================
+  FUNCTION CALLS START
+  ============================================================================= */
+  /* ==========================================================================
+  VIEW START
+  ============================================================================= */
+  return {
+    view: () => {
+      u()
+      return [
+        m('div.RANDOM', [
+          m(AppBar),
+        ])
+      ]
+    }
+  }
+}
+endsnippet
+
+snippet optionalcomponent "creates a mithril divider with the word optional in the center" b
+m('div', {style: 'display: flex; align-items: center; user-select: none; margin: 0.5em;'}, [
+	m('div', {style: 'border-top: 1px solid grey; width: 100%;'}),
+	m('div.text-small', {style: 'padding: 0 0.5em; white-space: nowrap;'}, 'Optional'),
+	m('div', {style: 'border-top: 1px solid grey; width: 100%;'})
+]),
+endsnippet
+
+snippet pagelink "sends thee user to a new page" b
+m.route.set($1)
+endsnippet
+
+snippet switch "creates a switch case" b
+switch ($1) {
+	case $2:
+		break
+	case $3:
+		break
+	default:
+}
+endsnippet
+
+snippet timeout "creates a timeout function" b
+setTimeout(() => {
+	$1
+}, $2)
+endsnippet
+
+snippet .then "creates a then function after an await" b
+.then(async () => {
+    $1
+})
+endsnippet
+
+snippet vcomment "creates a variable comment section" b
+// =======================================$1======================================
+endsnippet
+
+snippet videopopup "creates a dialog popup on a page" b
+if (!isNAME) {
+	const link = ''
+	Dialog({
+		type: 'fullscreen',
+		title: '',
+		confirmText: lang.dontShow,
+		onConfirm: async () => {
+			await ac['/api/introInfoDismiss'].post({name: 'NAME'})
+		},
+		body: {view: () => m('div', {style: 'display: flex; justify-content: center; align-items: center; position: relative;'}, m('iframe', {src: link, webkitallowfullscreen: true, mozallowfullscreen: true, allowfullscreen: true, frameborder: '0', style: 'width: 80%; position: relative; top: 0; left: 0; aspect-ratio: 16/9;'}))}
+	})
+}
+endsnippet
+
+snippet view "creates a view function" b
+view: () => [
+	$1
+]
+endsnippet
+
+snippet addcolumn "creates an alter table migration with an add column"
+exports.up = function (db, callback) {
+  db.runSql('ALTER TABLE "$1NAME" ADD COLUMN "COLUMNNAME" INT NULL DEFAULT 0;', callback)
+}
+
+exports.down = function (db, callback) {
+  db.runSql('ALTER TABLE "$2" DROP COLUMN "COLUMNNAME";', callback)
+}
+endsnippet
+
+snippet foreign "creates a foreign key snippet" b
+CONSTRAINT 'NAME' FOREIGN KEY ('NAME') REFERENCES 'TABLE' ('id') ON DELETE CASCADE
+endsnippet
+
+snippet newtable "creates a new table query" b
+exports.up = function (db, callback) {
+  db.runSql(
+		"CREATE TABLE 'NAME' (
+			'id' INT NOT NULL AUTO_INCREMENT,
+			'createdAt' bigint(20) DEFAULT NULL,
+			'updatedAt' bigint(20) DEFAULT NULL,
+			PRIMARY KEY ('id')
+		);"
+	, callback)
+}
+
+exports.down = function (db, callback) {
+  db.runSql("DROP TABLE 'NAME'", callback)
+}
+endsnippet

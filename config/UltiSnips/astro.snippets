@@ -1,0 +1,39 @@
+snippet snippets "outputs all snippets for this language" b
+darkmode
+media
+mithrilpage
+RAM
+endsnippet
+
+snippet darkmode "outputs a darkmode query" b
+@media (prefers-color-scheme: dark) {
+  $1
+}
+endsnippet
+
+snippet media "creates a css media query" b
+@media only screen and (max-width: $1px) {
+  $2
+}
+endsnippet
+
+snippet mithrilpage "creates a new mithril page for an astro" b
+---
+import Layout from '../layouts/Layout.astro'
+import Navigation from '../components/Navigation.astro'
+---
+
+<Layout title="$1NAME">
+  <Navigation />
+  <div id="mithril-container"></div>
+  <script>
+    import "../scripts/$2NAME.ts";
+  </script>
+</Layout>
+endsnippet
+
+snippet RAM "creates the css for the Repeat Auto Minmax" b
+display: grid;
+grid-gap: 1rem;
+grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+endsnippet

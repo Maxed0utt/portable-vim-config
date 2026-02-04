@@ -1,0 +1,127 @@
+snippet snippets "outputs all snippets for this language" b
+binarySearch
+click
+change
+comment
+hcomment
+ifor
+inner
+.for
+log
+newview
+switch
+timeout
+vcomment
+endsnippet
+
+snippet binarySearch "creates a binary search function" b
+function binarySearch(nums: number[], target: number): number {
+  let left: number = 0;
+  let right: number = nums.length - 1;
+  while (left <= right) {
+    const mid: number = Math.floor((left + right) / 2);
+    if (nums[mid] === target) return mid;
+    if (target < nums[mid]) right = mid - 1;
+    else left = mid + 1;
+  }
+  return -1;
+}
+endsnippet
+
+snippet click "creates an onclick function" b
+onclick: () => {
+	$1
+}
+endsnippet
+
+snippet change  "creates an onchange event" b
+onchange: (event: any) => {
+	$1
+}
+endsnippet
+
+snippet comment "creates a section comment" b
+/* ==========================================================================
+$1
+============================================================================= */
+endsnippet
+
+snippet hcomment "creates an html comment block" b
+<!--=========================================================================
+$1
+=============================================================================-->
+endsnippet
+
+snippet ifor "creates a for loop" b
+for (let i = 0; i < $1; i++) {
+	$2
+}
+endsnippet
+
+snippet inner "creates an innerHTML attribute" b
+{innerHTML: $1}
+endsnippet
+
+snippet .for "creates a foreach loop" b
+.forEach(el => {
+	$1
+});
+endsnippet
+
+snippet log "performs a console.log() function" b
+console.log($1);
+endsnippet
+
+snippet newview "creates a new svelte view" b
+<script lang="ts" context="module">
+/* ==========================================================================
+IMPORTS START
+============================================================================= */
+$1
+</script>
+<script lang="ts">
+/* ==========================================================================
+ATTRIBUTES START
+============================================================================= */
+/* ==========================================================================
+FUNCTIONS START
+============================================================================= */
+/* ==========================================================================
+FUNCTION CALLS START
+============================================================================= */
+</script>
+
+<!--==========================================================================
+VIEW START
+=============================================================================-->
+$2
+<style>
+/* ==========================================================================
+STYLE START
+============================================================================= */
+</style>
+endsnippet
+
+snippet pagelink "sends thee user to a new page" b
+m.route.set($1);
+endsnippet
+
+snippet switch "creates a switch case" b
+switch($1) {
+	case $2:
+		break;
+	case $3:
+		break;
+	default:
+}
+endsnippet
+
+snippet timeout "creates a timeout function" b
+setTimeout(() => {
+	$1
+}, $2);
+endsnippet
+
+snippet vcomment "creates a variable comment section" b
+// =======================================$1======================================
+endsnippet

@@ -1,0 +1,50 @@
+snippet snippets "prints out all the snippets to the screen" b
+column-gap
+comment
+display: none;
+gap
+grow
+media
+RAM
+row-gap
+endsnippet
+
+snippet column-gap "column gap with comment" b
+column-gap: $1; /* ⬄ only */
+endsnippet
+
+snippet comment "creates a section comment" b
+/* =========================================================================="
+$1
+============================================================================= */
+endsnippet
+
+snippet displayn "adds comment when display none" b
+display: none; /* remove the element from page and DOM. */
+endsnippet
+
+snippet gap "gap with comment" b
+gap: $1; /* ⇳ and ⬄ */
+endsnippet
+
+snippet RAM "creates a parent with a square grid layout that automatically will be mobile friendly" b
+$1 {
+	display: grid;
+	grid-gap: 1rem;
+	grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+endsnippet
+
+snippet grow "grow animation" b
+transform: scale(1.1); /* grow animation */
+endsnippet
+
+snippet media "media query" b
+@media only screen and (max-width: $1) {
+  $2
+}
+endsnippet
+
+snippet row-gap "row gap with comment" b
+row-gap: $1; /* ⇳ only */
+endsnippet

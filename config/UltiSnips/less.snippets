@@ -1,0 +1,42 @@
+snippet snippets "prints out all the snippets to the screen" b
+comment
+darkmode
+grow
+media
+RAM
+vcomment
+endsnippet
+
+snippet comment "creates a section comment" b
+/* =========================================================================="
+$1
+============================================================================= */
+endsnippet
+
+snippet darkmode "outputs a darkmode query" b
+@media (prefers-color-scheme: dark) {
+  $1
+}
+endsnippet
+
+snippet grow "grow animation" b
+transform: scale(1.1); /* grow animation */
+endsnippet
+
+snippet media "media query" b
+@media only screen and (max-width: $1px) {
+  $2
+}
+endsnippet
+
+snippet RAM "creates a parent with a square grid layout that automatically will be mobile friendly" b
+$1 {
+	display: grid;
+	grid-gap: 1rem;
+	grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+endsnippet
+
+snippet vcomment "creates a variable comment section" b
+// =======================================$1======================================
+endsnippet

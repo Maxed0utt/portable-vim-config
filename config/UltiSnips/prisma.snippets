@@ -1,0 +1,5 @@
+snippet default "creates default table items" b
+id        Int      @id @default(autoincrement())
+createdAt DateTime @default(now())
+updatedAt DateTime @updatedAt
+endsnippet

@@ -1,0 +1,37 @@
+snippet snippets "lists out all the snippets" b
+addcolumn
+foreign
+newtable
+endsnippet
+
+snippet addcolumn "creates an alter table migration with an add column"
+  public function up(): void {
+    $this->execute('ALTER TABLE "$1NAME" ADD COLUMN "COLUMNNAME" INT NULL DEFAULT 0');
+  }
+
+  public function down(): void {
+    $this->table('NAME')->removeColumn('COLUMNNAME')->save();
+  }
+endsnippet
+
+snippet foreign "creates a foreign key snippet" b
+CONSTRAINT 'NAME' FOREIGN KEY ('NAME') REFERENCES 'TABLE' ('id') ON DELETE CASCADE
+endsnippet
+
+snippet newtable "creates a new table query" b
+  public function up(): void {
+
+    $this->execute(
+      "CREATE TABLE 'NAME' (
+          'id' INT NOT NULL AUTO_INCREMENT,
+          'createdAt' DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP(),
+          'updatedAt' TIMESTAMP NOT NULL,
+          PRIMARY KEY ('id')
+      );"
+    );
+  }
+
+  public function down(): void {
+      $this->execute("DROP TABLE 'NAME'");
+  }
+endsnippet
