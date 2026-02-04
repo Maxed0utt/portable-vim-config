@@ -1,0 +1,16 @@
+# Workspace
+workspace/
+
+# Environment files
+.env
+.env.*
+
+# Temp files
+*.tmp
+*.swp
+*~
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
