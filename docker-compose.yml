@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  vim-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        USERNAME: developer
+        USER_UID: 1000
+        USER_GID: 1000
+    image: vim-dev-environment:latest
+    container_name: vim-dev
+    hostname: vim-dev
+
+    # Interactive terminal
+    stdin_open: true
+    tty: true
+
+    # Environment variables
+    environment:
+      - GIT_USER_NAME=${GIT_USER_NAME:-}
+      - GIT_USER_EMAIL=${GIT_USER_EMAIL:-}
+      - TERM=xterm-256color
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}
+
+    volumes:
+      # Main workspace - mount your project directory here
+      - ${WORKSPACE:-./workspace}:/workspace
+
+      # Persist Claude Code authentication
+      - ${CLAUDE_CONFIG:-~/.config/claude-docker}:/home/developer/.claude
+
+      # SSH keys (read-only for security)
+      - ${SSH_PATH:-~/.ssh}:/home/developer/.ssh-host:ro
+
+    working_dir: /workspace
+
+    # Security options
+    security_opt:
+      - no-new-privileges:true
