@@ -34,6 +34,9 @@ services:
       # SSH keys (read-only for security)
       - ${SSH_PATH:-~/.ssh}:/home/developer/.ssh-host:ro
 
+      # Persist git credentials (for HTTPS authentication with GitHub)
+      - ${GIT_CREDENTIALS:-~/.config/git-docker}:/home/developer/.git-credentials-store
+
     working_dir: /workspace
 
     # Security options

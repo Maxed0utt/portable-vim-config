@@ -17,9 +17,11 @@ GIT_USER_EMAIL="${GIT_USER_EMAIL:-}"
 # Paths
 SSH_PATH="${SSH_PATH:-$HOME/.ssh}"
 CLAUDE_CONFIG="${CLAUDE_CONFIG:-$HOME/.config/claude-docker}"
+GIT_CREDENTIALS="${GIT_CREDENTIALS:-$HOME/.config/git-docker}"
 
-# Ensure Claude config directory exists
+# Ensure config directories exist
 mkdir -p "$CLAUDE_CONFIG"
+mkdir -p "$GIT_CREDENTIALS"
 
 # Build if image doesn't exist
 if ! docker image inspect "$IMAGE_NAME" &>/dev/null; then
@@ -42,6 +44,7 @@ docker run -it --rm \
     -v "$WORKSPACE:/workspace" \
     -v "$SSH_PATH:/home/developer/.ssh-host:ro" \
     -v "$CLAUDE_CONFIG:/home/developer/.claude" \
+    -v "$GIT_CREDENTIALS:/home/developer/.git-credentials-store" \
     -w /workspace \
     "$IMAGE_NAME" \
     "${@:-bash}"

@@ -18,6 +18,23 @@ if [ -d "/workspace" ]; then
 fi
 
 # =============================================================================
+# Git Credential Storage (for HTTPS authentication)
+# =============================================================================
+GIT_CREDS_DIR="/home/developer/.git-credentials-store"
+GIT_CREDS_FILE="$GIT_CREDS_DIR/.git-credentials"
+
+if [ -d "$GIT_CREDS_DIR" ]; then
+    # Configure git to use credential store with persistent file
+    git config --global credential.helper "store --file=$GIT_CREDS_FILE"
+
+    # Ensure proper permissions
+    chmod 700 "$GIT_CREDS_DIR" 2>/dev/null || true
+    if [ -f "$GIT_CREDS_FILE" ]; then
+        chmod 600 "$GIT_CREDS_FILE"
+    fi
+fi
+
+# =============================================================================
 # SSH Key Setup
 # =============================================================================
 if [ -d "/home/developer/.ssh-host" ] && [ "$(ls -A /home/developer/.ssh-host 2>/dev/null)" ]; then
