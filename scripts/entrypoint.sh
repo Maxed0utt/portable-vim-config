@@ -27,6 +27,9 @@ if [ -n "$GITHUB_TOKEN" ]; then
     echo "https://${GITHUB_USER}:${GITHUB_TOKEN}@github.com" > "$GIT_CREDS_FILE"
     chmod 600 "$GIT_CREDS_FILE"
     git config --global credential.helper "store --file=$GIT_CREDS_FILE"
+
+    # URL rewriting to automatically include credentials (for lazygit compatibility)
+    git config --global url."https://${GITHUB_USER}:${GITHUB_TOKEN}@github.com/".insteadOf "https://github.com/"
 fi
 
 # =============================================================================
