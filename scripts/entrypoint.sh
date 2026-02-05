@@ -18,20 +18,15 @@ if [ -d "/workspace" ]; then
 fi
 
 # =============================================================================
-# Git Credential Storage (for HTTPS authentication)
+# GitHub Token Authentication (for HTTPS)
 # =============================================================================
-GIT_CREDS_DIR="/home/developer/.git-credentials-store"
-GIT_CREDS_FILE="$GIT_CREDS_DIR/.git-credentials"
-
-if [ -d "$GIT_CREDS_DIR" ]; then
-    # Configure git to use credential store with persistent file
+if [ -n "$GITHUB_TOKEN" ]; then
+    # Write credentials directly to git-credentials file
+    GIT_CREDS_FILE="/home/developer/.git-credentials"
+    GITHUB_USER="${GIT_USER_NAME:-git}"
+    echo "https://${GITHUB_USER}:${GITHUB_TOKEN}@github.com" > "$GIT_CREDS_FILE"
+    chmod 600 "$GIT_CREDS_FILE"
     git config --global credential.helper "store --file=$GIT_CREDS_FILE"
-
-    # Ensure proper permissions
-    chmod 700 "$GIT_CREDS_DIR" 2>/dev/null || true
-    if [ -f "$GIT_CREDS_FILE" ]; then
-        chmod 600 "$GIT_CREDS_FILE"
-    fi
 fi
 
 # =============================================================================
