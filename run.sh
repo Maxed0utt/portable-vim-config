@@ -38,6 +38,7 @@ docker run -it --rm \
     -e "GIT_USER_NAME=$GIT_USER_NAME" \
     -e "GIT_USER_EMAIL=$GIT_USER_EMAIL" \
     -e "GITHUB_TOKEN=${GITHUB_TOKEN:-}" \
+    -e "GIT_TERMINAL_PROMPT=0" \
     -e "TERM=xterm-256color" \
     -e "ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}" \
     -v "$WORKSPACE:/workspace" \
