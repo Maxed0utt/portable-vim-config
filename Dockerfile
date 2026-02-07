@@ -33,6 +33,14 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     sudo \
     openssh-client \
     unzip \
+    # Tauri / Rust native dependencies
+    pkg-config \
+    libssl-dev \
+    libgtk-3-dev \
+    libwebkit2gtk-4.0-dev \
+    libappindicator3-dev \
+    librsvg2-dev \
+    libsoup2.4-dev \
     && rm -rf /var/lib/apt/lists/*
 
 # =============================================================================
@@ -73,6 +81,16 @@ RUN LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygi
 # Install Claude Code CLI
 # =============================================================================
 RUN npm install -g @anthropic-ai/claude-code
+
+# =============================================================================
+# Install Rust toolchain + rust-analyzer
+# =============================================================================
+ENV RUSTUP_HOME=/usr/local/rustup
+ENV CARGO_HOME=/usr/local/cargo
+ENV PATH=/usr/local/cargo/bin:$PATH
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain stable \
+    && rustup component add rust-analyzer rust-src \
+    && chmod -R a+rw $RUSTUP_HOME $CARGO_HOME
 
 # =============================================================================
 # Create non-root developer user
@@ -131,6 +149,7 @@ RUN mkdir -p ~/.config/coc/extensions \
         coc-pyright \
         coc-eslint \
         coc-pairs \
+        coc-rust-analyzer \
     || true
 
 # =============================================================================
