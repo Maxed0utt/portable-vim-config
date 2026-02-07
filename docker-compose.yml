@@ -36,8 +36,14 @@ services:
       # SSH keys (read-only for security)
       - ${SSH_PATH:-~/.ssh}:/home/developer/.ssh-host:ro
 
+      # Persist Cargo registry cache between container restarts
+      - cargo-cache:/usr/local/cargo/registry
+
     working_dir: /workspace
 
     # Security options
     security_opt:
       - no-new-privileges:true
+
+volumes:
+  cargo-cache:

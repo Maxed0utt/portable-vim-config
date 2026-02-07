@@ -38,6 +38,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libssl-dev \
     libgtk-3-dev \
     libwebkit2gtk-4.0-dev \
+    libwebkit2gtk-4.1-dev \
+    libjavascriptcoregtk-4.1-dev \
+    libsoup-3.0-dev \
     libappindicator3-dev \
     librsvg2-dev \
     libsoup2.4-dev \
@@ -88,6 +91,8 @@ RUN npm install -g @anthropic-ai/claude-code
 ENV RUSTUP_HOME=/usr/local/rustup
 ENV CARGO_HOME=/usr/local/cargo
 ENV PATH=/usr/local/cargo/bin:$PATH
+# Use a container-local target dir so host and container builds don't conflict
+ENV CARGO_TARGET_DIR=/home/developer/.cargo-target
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain stable \
     && rustup component add rust-analyzer rust-src \
     && chmod -R a+rw $RUSTUP_HOME $CARGO_HOME
@@ -110,9 +115,10 @@ RUN groupadd --gid $USER_GID $USERNAME \
 USER $USERNAME
 WORKDIR /home/$USERNAME
 
-# Create vim/nvim directories
+# Create vim/nvim directories and cargo target directory
 RUN mkdir -p ~/.vim/autoload ~/.vim/plugged ~/.vim/UltiSnips ~/.vim/session \
-    && mkdir -p ~/.config/nvim ~/.config/coc/extensions ~/.local/share/nvim/site/autoload
+    && mkdir -p ~/.config/nvim ~/.config/coc/extensions ~/.local/share/nvim/site/autoload \
+    && mkdir -p ~/.cargo-target
 
 # Copy vim-plug manager (for both vim and nvim)
 COPY --chown=$USERNAME:$USERNAME config/plug.vim /home/$USERNAME/.vim/autoload/plug.vim

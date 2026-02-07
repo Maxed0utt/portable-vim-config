@@ -1,5 +1,6 @@
 {
     "typescript.suggest.autoImports": true,
     "typescript.preferences.includePackageJsonAutoImports": "on",
-    "svelte.enable-ts-plugin": true
+    "svelte.enable-ts-plugin": true,
+    "rust-analyzer.server.path": "/usr/local/cargo/bin/rust-analyzer"
 }
