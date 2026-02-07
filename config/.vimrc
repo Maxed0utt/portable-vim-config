@@ -84,6 +84,8 @@ Plug 'dhruvasagar/vim-table-mode'
 Plug 'ojroques/vim-oscyank', {'branch': 'main'}
 Plug 'instant-markdown/vim-instant-markdown', {'for': 'markdown', 'do': 'yarn install'}
 Plug 'cakebaker/scss-syntax.vim'
+Plug 'rust-lang/rust.vim'
+Plug 'saecki/crates.nvim'
 call plug#end()
 
 "============================================================================
@@ -178,7 +180,7 @@ let $FZF_DEFAULT_COMMAND='find . \( -name vendor -o -name node_modules -o -name 
 "COC SETTINGS START
 "============================================================================
 "these are all my completion servers
-let g:coc_global_extensions=['coc-solargraph', 'coc-phpls', 'coc-html', 'coc-json', 'coc-sql', 'coc-eslint', 'coc-html', 'coc-db', 'coc-java', 'coc-python', 'coc-tsserver', 'coc-css', 'coc-clangd', 'coc-pairs', 'coc-prisma', '@yaegassy/coc-astro']
+let g:coc_global_extensions=['coc-solargraph', 'coc-phpls', 'coc-html', 'coc-json', 'coc-sql', 'coc-eslint', 'coc-html', 'coc-db', 'coc-java', 'coc-python', 'coc-tsserver', 'coc-css', 'coc-clangd', 'coc-pairs', 'coc-prisma', '@yaegassy/coc-astro', 'coc-rust-analyzer']
 let g:svelte_indent_script = 0
 let g:svelte_indent_style = 0
 let g:svelte_preprocessors = ['typescript']
@@ -299,6 +301,11 @@ let g:vim_ai_token_file_path = '~/.config/openai.token'
 
 "=======================================AI TRANSLATION======================================
 command! -range -nargs=? AITranslate <line1>,<line2>call AIEditRun(<range>, "Translate to French : " . <q-args>)
+
+"============================================================================
+"RUST SETTINGS START
+"============================================================================
+let g:rustfmt_autosave = 1
 
 "============================================================================
 "RIPGREP EXPRESSION
