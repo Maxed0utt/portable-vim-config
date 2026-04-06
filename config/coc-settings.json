@@ -2,5 +2,8 @@
     "typescript.suggest.autoImports": true,
     "typescript.preferences.includePackageJsonAutoImports": "on",
     "svelte.enable-ts-plugin": true,
-    "rust-analyzer.server.path": "/usr/local/cargo/bin/rust-analyzer"
+    "rust-analyzer.server.path": "/usr/local/cargo/bin/rust-analyzer",
+    "elixir.pathToElixirLS": "~/.config/coc/extensions/node_modules/coc-elixir/els-release/language_server.sh",
+    "elixirLS.dialyzerEnabled": true,
+    "elixirLS.fetchDeps": false
 }

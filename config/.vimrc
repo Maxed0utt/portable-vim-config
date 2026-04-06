@@ -86,6 +86,7 @@ Plug 'instant-markdown/vim-instant-markdown', {'for': 'markdown', 'do': 'yarn in
 Plug 'cakebaker/scss-syntax.vim'
 Plug 'rust-lang/rust.vim'
 Plug 'saecki/crates.nvim'
+Plug 'elixir-editors/vim-elixir'
 call plug#end()
 
 "============================================================================
@@ -180,7 +181,7 @@ let $FZF_DEFAULT_COMMAND='find . \( -name vendor -o -name node_modules -o -name 
 "COC SETTINGS START
 "============================================================================
 "these are all my completion servers
-let g:coc_global_extensions=['coc-solargraph', 'coc-phpls', 'coc-html', 'coc-json', 'coc-sql', 'coc-eslint', 'coc-html', 'coc-db', 'coc-java', 'coc-python', 'coc-tsserver', 'coc-css', 'coc-clangd', 'coc-pairs', 'coc-prisma', '@yaegassy/coc-astro', 'coc-rust-analyzer']
+let g:coc_global_extensions=['coc-solargraph', 'coc-phpls', 'coc-html', 'coc-json', 'coc-sql', 'coc-eslint', 'coc-html', 'coc-db', 'coc-java', 'coc-python', 'coc-tsserver', 'coc-css', 'coc-clangd', 'coc-pairs', 'coc-prisma', '@yaegassy/coc-astro', 'coc-rust-analyzer', 'coc-elixir']
 let g:svelte_indent_script = 0
 let g:svelte_indent_style = 0
 let g:svelte_preprocessors = ['typescript']
@@ -306,6 +307,12 @@ command! -range -nargs=? AITranslate <line1>,<line2>call AIEditRun(<range>, "Tra
 "RUST SETTINGS START
 "============================================================================
 let g:rustfmt_autosave = 1
+
+"============================================================================
+"ELIXIR SETTINGS START
+"============================================================================
+autocmd BufWritePost *.ex,*.exs silent! !mix format %
+autocmd BufWritePost *.heex silent! !mix format %
 
 "============================================================================
 "RIPGREP EXPRESSION

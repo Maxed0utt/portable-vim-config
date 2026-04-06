@@ -98,6 +98,20 @@ RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --de
     && chmod -R a+rw $RUSTUP_HOME $CARGO_HOME
 
 # =============================================================================
+# Install Erlang/OTP and Elixir
+# =============================================================================
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        erlang \
+        inotify-tools \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Elixir from precompiled release (OTP-24 matches Ubuntu 22.04 erlang)
+ENV PATH=/usr/local/elixir/bin:$PATH
+RUN curl -fsSL https://github.com/elixir-lang/elixir/releases/download/v1.16.3/elixir-otp-24.zip -o /tmp/elixir.zip \
+    && unzip /tmp/elixir.zip -d /usr/local/elixir \
+    && rm /tmp/elixir.zip
+
+# =============================================================================
 # Create non-root developer user
 # =============================================================================
 ARG USERNAME=developer
@@ -119,6 +133,9 @@ WORKDIR /home/$USERNAME
 RUN mkdir -p ~/.vim/autoload ~/.vim/plugged ~/.vim/UltiSnips ~/.vim/session \
     && mkdir -p ~/.config/nvim ~/.config/coc/extensions ~/.local/share/nvim/site/autoload \
     && mkdir -p ~/.cargo-target
+
+# Set up Elixir package managers (Hex + Rebar)
+RUN mix local.hex --force && mix local.rebar --force
 
 # Copy vim-plug manager (for both vim and nvim)
 COPY --chown=$USERNAME:$USERNAME config/plug.vim /home/$USERNAME/.vim/autoload/plug.vim
@@ -156,6 +173,7 @@ RUN mkdir -p ~/.config/coc/extensions \
         coc-eslint \
         coc-pairs \
         coc-rust-analyzer \
+        coc-elixir \
     || true
 
 # =============================================================================
